@@ -167,9 +167,9 @@ export default function AuditForm() {
       <h1 className="text-2xl font-bold text-navy mb-6">{editId ? 'Edit Call Audit' : 'New Call Audit'}</h1>
       
       {/* Header Fields */}
-      <Card className="p-6 mb-8 border-t-4 border-t-navy">
+      <Card className="p-4 md:p-6 mb-8 border-t-4 border-t-navy">
         <h2 className="text-lg font-semibold text-teal mb-4 border-b pb-2">Call Metadata</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Audit Date</label>
             <input type="date" value={auditDate} onChange={e => setAuditDate(e.target.value)} className="w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-50 border" />
@@ -260,8 +260,8 @@ export default function AuditForm() {
           
           return (
           <Card key={section.id} className={cn("border-t-4", sectionColor)}>
-            <div className={cn("px-6 py-3 text-white flex justify-between items-center", headerBg)}>
-              <h2 className="text-lg font-bold">{section.title} <span className="text-sm font-normal opacity-75 ml-2">({section.weight})</span></h2>
+            <div className={cn("px-4 md:px-6 py-3 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0", headerBg)}>
+              <h2 className="text-base md:text-lg font-bold">{section.title} <span className="text-sm font-normal opacity-75 ml-2">({section.weight})</span></h2>
               <div className="font-mono bg-black/20 px-3 py-1 rounded">
                 Score: {currentSectionScore.toFixed(1)}%
               </div>
@@ -275,8 +275,8 @@ export default function AuditForm() {
                 const missing = isMandatoryComment && !comment.trim();
 
                 return (
-                  <div key={item.id} className="p-6 hover:bg-gray-50 transition-colors">
-                    <div className="flex flex-col lg:flex-row gap-6">
+                  <div key={item.id} className="p-4 md:p-6 hover:bg-gray-50 transition-colors">
+                    <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-1">
                           <span className="font-mono text-xs font-bold bg-gray-200 text-gray-700 px-2 py-0.5 rounded">{item.id}</span>
@@ -286,18 +286,18 @@ export default function AuditForm() {
                         <p className="text-sm text-gray-500 max-w-xl">{item.desc}</p>
                       </div>
                       
-                      <div className="w-full lg:w-48 xl:w-64 shrink-0 flex items-center justify-start lg:justify-end">
+                      <div className="w-full lg:w-48 xl:w-64 shrink-0 flex items-center justify-start lg:justify-end mt-2 lg:mt-0">
                         {item.type === 'auto-fail' ? (
-                          <div className="flex rounded-md shadow-sm overflow-hidden bg-white border border-gray-300">
-                             <button type="button" onClick={() => handleScoreChange(k, 'pass')} className={cn("px-4 py-2 text-sm font-medium transition-colors border-r border-gray-200 focus:outline-none", score === 'pass' ? "bg-green-600 text-white" : "text-gray-700 hover:bg-gray-100")}>
+                          <div className="flex rounded-md shadow-sm overflow-hidden bg-white border border-gray-300 w-full lg:w-auto">
+                             <button type="button" onClick={() => handleScoreChange(k, 'pass')} className={cn("flex-1 lg:flex-none px-4 py-2 text-sm font-medium transition-colors border-r border-gray-200 focus:outline-none", score === 'pass' ? "bg-green-600 text-white" : "text-gray-700 hover:bg-gray-100")}>
                                 Pass
                              </button>
-                             <button type="button" onClick={() => handleScoreChange(k, 'fail')} className={cn("px-4 py-2 text-sm font-medium transition-colors focus:outline-none", score === 'fail' ? "bg-fail text-white" : "text-gray-700 hover:bg-gray-100")}>
+                             <button type="button" onClick={() => handleScoreChange(k, 'fail')} className={cn("flex-1 lg:flex-none px-4 py-2 text-sm font-medium transition-colors focus:outline-none", score === 'fail' ? "bg-fail text-white" : "text-gray-700 hover:bg-gray-100")}>
                                 Fail
                              </button>
                           </div>
                         ) : (
-                          <div className="flex rounded-md shadow-sm border border-gray-300 bg-white">
+                          <div className="flex rounded-md shadow-sm border border-gray-300 bg-white w-full lg:w-auto">
                             {[1,2,3,4,5].map(val => {
                               let bg = "bg-white text-gray-700 hover:bg-gray-100";
                               if (score === val) {
@@ -308,7 +308,7 @@ export default function AuditForm() {
                                 else bg = "bg-[#1A3A2A] text-white";
                               }
                               return (
-                                <button key={val} type="button" onClick={() => handleScoreChange(k, val)} className={cn("w-10 h-10 flex items-center justify-center font-bold text-sm transition-colors focus:outline-none border-r border-gray-200 last:border-r-0", bg)}>
+                                <button key={val} type="button" onClick={() => handleScoreChange(k, val)} className={cn("flex-1 lg:flex-none lg:w-10 h-10 flex items-center justify-center font-bold text-sm transition-colors focus:outline-none border-r border-gray-200 last:border-r-0", bg)}>
                                   {val}
                                 </button>
                               )
@@ -318,7 +318,7 @@ export default function AuditForm() {
                       </div>
                     </div>
                     
-                    <div className="mt-4 pl-[3.25rem]">
+                    <div className="mt-4 md:pl-[3.25rem]">
                        <div className="relative">
                          <textarea 
                            placeholder={isMandatoryComment ? "Comment required due to low score or fail..." : "Optional comment..."} 
@@ -366,53 +366,59 @@ export default function AuditForm() {
       </Card>
 
       {/* Sticky Score Bar */}
-      <div className="fixed bottom-0 left-64 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] p-4 flex items-center justify-between z-10 px-8">
-        <div className="flex items-center space-x-8">
-           <div>
-             <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Progress</div>
-             <div className="font-mono font-bold text-navy flex items-center">
-               <span className={scoredCount === 18 ? "text-green-600" : ""}>{scoredCount}</span> / 18
+      <div className="fixed bottom-0 left-0 md:left-64 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] p-3 md:p-4 flex flex-col md:flex-row items-center justify-between z-40 px-4 md:px-8 gap-3 md:gap-0">
+        <div className="flex items-center space-x-4 md:space-x-8 w-full md:w-auto justify-between md:justify-start">
+           <div className="flex items-center space-x-4 md:space-x-8">
+             <div>
+               <div className="text-[10px] md:text-xs text-gray-500 font-semibold uppercase tracking-wider">Progress</div>
+               <div className="font-mono font-bold text-navy flex items-center text-sm md:text-base">
+                 <span className={scoredCount === 18 ? "text-green-600" : ""}>{scoredCount}</span> / 18
+               </div>
              </div>
-           </div>
-           
-           <div className="h-10 border-r border-gray-300"></div>
+             
+             <div className="hidden lg:block h-10 border-r border-gray-300"></div>
 
-           <div>
-             <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">A: Accur.</div>
-             <div className="font-mono font-bold">{sectionScores.A.toFixed(1)}%</div>
-           </div>
-           <div>
-             <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">B: Resol.</div>
-             <div className="font-mono font-bold">{sectionScores.B.toFixed(1)}%</div>
-           </div>
-           <div>
-             <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">C: Finan.</div>
-             <div className="font-mono font-bold">{sectionScores.C.toFixed(1)}%</div>
-           </div>
-           <div>
-             <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">D: Serv.</div>
-             <div className="font-mono font-bold">{sectionScores.D.toFixed(1)}%</div>
+             <div className="hidden lg:block">
+               <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">A: Accur.</div>
+               <div className="font-mono font-bold">{sectionScores.A.toFixed(1)}%</div>
+             </div>
+             <div className="hidden lg:block">
+               <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">B: Resol.</div>
+               <div className="font-mono font-bold">{sectionScores.B.toFixed(1)}%</div>
+             </div>
+             <div className="hidden lg:block">
+               <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">C: Finan.</div>
+               <div className="font-mono font-bold">{sectionScores.C.toFixed(1)}%</div>
+             </div>
+             <div className="hidden lg:block">
+               <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider">D: Serv.</div>
+               <div className="font-mono font-bold">{sectionScores.D.toFixed(1)}%</div>
+             </div>
+
+             <div className="hidden md:block h-10 border-r border-gray-300"></div>
            </div>
 
-           <div className="h-10 border-r border-gray-300"></div>
-
-           <div className="flex items-center space-x-4">
+           <div className="flex items-center space-x-2 md:space-x-4">
               <div>
-                <div className="text-xs text-gray-500 font-semibold uppercase tracking-wider text-right mb-1">Total Score</div>
-                <div className="font-mono font-bold text-2xl leading-none">{totalScore.toFixed(1)}%</div>
+                <div className="text-[10px] md:text-xs text-gray-500 font-semibold uppercase tracking-wider text-right mb-0 md:mb-1">Total Score</div>
+                <div className="font-mono font-bold text-lg md:text-2xl leading-none text-right">{totalScore.toFixed(1)}%</div>
               </div>
-              <div className={cn("px-4 py-2 rounded-md font-bold uppercase tracking-widest border border-white/20 shadow-sm text-white", getVerdictColor(verdict))}>
+              <div className={cn("px-2 py-1 md:px-4 md:py-2 rounded-md font-bold uppercase tracking-widest border border-white/20 shadow-sm text-white text-[10px] md:text-sm", getVerdictColor(verdict))}>
                 {verdict}
               </div>
            </div>
         </div>
         
-        <div className="flex items-center space-x-4">
-           {!isComplete && !hasAutoFail && <span className="text-sm text-gray-500 italic">Fill all 18 items & headers to submit</span>}
-           {!isComplete && hasAutoFail && <span className="text-sm text-fail italic font-semibold">Fill headers to save auto-fail</span>}
-           {isComplete && missingComments.length > 0 && <span className="text-sm text-fail italic font-semibold">Missing mandatory comments</span>}
-           <Button onClick={() => window.scrollTo(0, 0)} variant="secondary">Reset</Button>
-           <Button onClick={handleSubmit} disabled={!canSubmit} className="shadow-md">{editId ? 'Update Audit Record' : 'Save Audit Record'}</Button>
+        <div className="flex items-center space-x-3 md:space-x-4 w-full md:w-auto justify-end">
+           <div className="hidden sm:flex flex-col text-right">
+             {!isComplete && !hasAutoFail && <span className="text-xs text-gray-500 italic">Fill all 18 items to submit</span>}
+             {!isComplete && hasAutoFail && <span className="text-xs text-fail italic font-semibold">Fill headers to save auto-fail</span>}
+             {isComplete && missingComments.length > 0 && <span className="text-xs text-fail italic font-semibold">Missing mandatory comments</span>}
+           </div>
+           <Button onClick={() => window.scrollTo(0, 0)} variant="secondary" className="px-3 py-1.5 md:px-4 md:py-2 text-sm h-auto flex-1 md:flex-none">Reset</Button>
+           <Button onClick={handleSubmit} disabled={!canSubmit} className="shadow-md px-3 py-1.5 md:px-4 md:py-2 text-sm h-auto flex-1 md:flex-none">
+             {editId ? 'Update' : 'Save'}
+           </Button>
         </div>
       </div>
     </div>

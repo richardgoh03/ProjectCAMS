@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ClipboardList, Table, BarChart3, Users, User, Compass, Target, Settings, ShieldCheck } from 'lucide-react';
 import { clsx } from 'clsx';
+import { useStore } from '../../store/useStore';
 
 const navItems = [
   { name: 'Audit Form', path: '/', icon: ClipboardList },
@@ -15,14 +16,28 @@ const navItems = [
 
 export function Sidebar() {
   const location = useLocation();
+  const { isMobileMenuOpen, setMobileMenuOpen } = useStore();
 
   return (
-    <div className="w-64 bg-navy text-white flex flex-col h-full overflow-y-auto">
-      <div className="p-4 bg-navy font-bold text-lg flex items-center border-b border-teal space-x-2">
-        <ClipboardList className="w-6 h-6 text-gold" />
-        <span>1FSS CAMS</span>
-      </div>
-      <nav className="flex-1 py-4">
+    <>
+      {/* Mobile Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+      
+      <div className={clsx(
+        "w-64 bg-navy text-white flex flex-col h-full overflow-y-auto z-50 transition-transform duration-200 ease-in-out shrink-0",
+        "fixed inset-y-0 left-0 md:relative md:translate-x-0",
+        isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+      )}>
+        <div className="p-4 bg-navy font-bold text-lg flex items-center border-b border-teal space-x-2 shrink-0">
+          <ClipboardList className="w-6 h-6 text-gold" />
+          <span>1FSS CAMS</span>
+        </div>
+        <nav className="flex-1 py-4">
         {navItems.map((item, idx) => {
           const isActive = location.pathname === item.path || (location.pathname === '/' && item.path === '/');
           const isDashboardHeader = idx === 2; // Inject a header before dashboards
@@ -37,6 +52,7 @@ export function Sidebar() {
               )}
               <Link
                 to={item.path}
+                onClick={() => setMobileMenuOpen(false)}
                 className={clsx(
                   "flex items-center px-5 py-3 text-sm transition-colors",
                   isActive ? "bg-teal text-gold border-r-4 border-gold" : "text-gray-300 hover:bg-teal hover:text-white",
@@ -50,6 +66,7 @@ export function Sidebar() {
           );
         })}
       </nav>
-    </div>
+      </div>
+    </>
   );
 }

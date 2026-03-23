@@ -7,6 +7,7 @@ interface StoreState {
   settings: Settings | null;
   loading: boolean;
   currentUser: string;
+  isMobileMenuOpen: boolean;
   
   // Actions
   loadData: () => Promise<void>;
@@ -16,6 +17,8 @@ interface StoreState {
   updateSettings: (settings: Settings) => Promise<void>;
   clearData: () => Promise<void>;
   setCurrentUser: (name: string) => void;
+  toggleMobileMenu: () => void;
+  setMobileMenuOpen: (isOpen: boolean) => void;
 }
 
 export const useStore = create<StoreState>((set) => ({
@@ -23,6 +26,7 @@ export const useStore = create<StoreState>((set) => ({
   settings: null,
   loading: true,
   currentUser: localStorage.getItem('cams_current_user') || 'Sarah QA',
+  isMobileMenuOpen: false,
 
   loadData: async () => {
     set({ loading: true });
@@ -76,5 +80,8 @@ export const useStore = create<StoreState>((set) => ({
   setCurrentUser: (name: string) => {
     localStorage.setItem('cams_current_user', name);
     set({ currentUser: name });
-  }
+  },
+  
+  toggleMobileMenu: () => set(state => ({ isMobileMenuOpen: !state.isMobileMenuOpen })),
+  setMobileMenuOpen: (isOpen: boolean) => set({ isMobileMenuOpen: isOpen })
 }));
