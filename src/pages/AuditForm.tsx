@@ -412,8 +412,8 @@ export default function AuditForm() {
         <div className="flex items-center space-x-3 md:space-x-4 w-full md:w-auto justify-end">
            <div className="hidden sm:flex flex-col text-right">
              {!isComplete && !hasAutoFail && <span className="text-xs text-gray-500 italic">Fill all 18 items to submit</span>}
-             {!isComplete && hasAutoFail && <span className="text-xs text-fail italic font-semibold">Fill headers to save auto-fail</span>}
-             {isComplete && missingComments.length > 0 && <span className="text-xs text-fail italic font-semibold">Missing mandatory comments</span>}
+             {!isComplete && hasAutoFail && <span className="text-xs text-fail italic font-semibold">Fill metadata headers to save auto-fail</span>}
+             {isComplete && missingComments.length > 0 && <span className="text-xs text-fail italic font-semibold">{hasAutoFail ? "Add a comment for the auto-fail item to enable Save" : "Missing mandatory comments"}</span>}
            </div>
            <Button onClick={() => window.scrollTo(0, 0)} variant="secondary" className="px-3 py-1.5 md:px-4 md:py-2 text-sm h-auto flex-1 md:flex-none">Reset</Button>
            <Button onClick={handleSubmit} disabled={!canSubmit} className="shadow-md px-3 py-1.5 md:px-4 md:py-2 text-sm h-auto flex-1 md:flex-none">
